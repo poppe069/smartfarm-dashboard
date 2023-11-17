@@ -41,6 +41,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-vercel": "^3.0.3",
+    "@sveltejs/kit": "^1.20.4",
     "@prisma/client": "5.5.2",
     "prisma": "^5.5.2"
   }
