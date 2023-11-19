@@ -38,7 +38,7 @@
 					<section class="mb-4"><span class="text-4xl">{numberFormat(res.light)}</span></section>
 				</div>
 				<div class="card p-2 variant-filled-primary">
-					<header class="card-header"><h4 class="h4">Soil Humidity</h4></header>
+					<header class="card-header"><h4 class="h4">Soil Moisture</h4></header>
 					<section class="mb-4">
 						<span class="text-4xl">{numberFormat(res.soil_humid)}</span>
 					</section>
