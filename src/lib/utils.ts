@@ -27,10 +27,10 @@ export function dateTime(_date: string) {
 	}
 }
 
-export function numberFormat(_number: string) {
+export function numberFormat(_number: string, _fractionDigit: number = 2) {
 	const numberFormatter = new Intl.NumberFormat('en-GB', {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
+		minimumFractionDigits: _fractionDigit,
+		maximumFractionDigits: _fractionDigit
 	});
 
 	try {
