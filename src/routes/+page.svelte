@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { dateTime, numberFormat } from '$lib/utils';
-	import { fade } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	let boardData = data.boards;
+
+	const fadeParams = {
+		duration: 300
+	};
 
 	const fetchData = async () => {
 		const res = await fetch('/api/sensor');
@@ -16,7 +20,7 @@
 	onMount(() => {
 		const interval = setInterval(() => {
 			fetchData();
-		}, 5000); // 5 seconds
+		}, 10000); // 10 seconds
 
 		return () => clearInterval(interval);
 	});
@@ -30,28 +34,40 @@
 				<div class="card p-2 variant-filled-primary">
 					<header class="card-header"><h4 class="h4">Air Humidity</h4></header>
 					<section class="mb-4">
-						<span class="text-4xl">{numberFormat(res.air_humid)}</span>
+						{#key res.air_humid}
+							<span class="text-4xl" in:scale>{numberFormat(res.air_humid)}</span>
+						{/key}
 					</section>
 				</div>
 				<div class="card p-2 variant-filled-primary">
 					<header class="card-header"><h4 class="h4">Light</h4></header>
-					<section class="mb-4"><span class="text-4xl">{numberFormat(res.light)}</span></section>
+					<section class="mb-4">
+						{#key res.light}
+							<span class="text-4xl" in:scale>{numberFormat(res.light, 0)}</span>
+						{/key}
+					</section>
 				</div>
 				<div class="card p-2 variant-filled-primary">
 					<header class="card-header"><h4 class="h4">Soil Moisture</h4></header>
 					<section class="mb-4">
-						<span class="text-4xl">{numberFormat(res.soil_humid)}</span>
+						{#key res.soil_humid}
+							<span class="text-4xl" in:scale>{numberFormat(res.soil_humid, 0)}</span>
+						{/key}
 					</section>
 				</div>
 				<div class="card p-2 variant-filled-primary">
 					<header class="card-header"><h4 class="h4">Temperature</h4></header>
 					<section class="mb-4">
-						<span class="text-4xl">{numberFormat(res.temperature)}</span>
+						{#key res.temperature}
+							<span class="text-4xl" in:scale>{numberFormat(res.temperature)}</span>
+						{/key}
 					</section>
 				</div>
-				<div class="text-gray-600 dark:txt-gray-400e text-left">
-					@{dateTime(res.createdAt.toString())}
-				</div>
+				{#key res.createdAt}
+					<div class="text-gray-600 dark:txt-gray-400e text-left" in:scale>
+						@{dateTime(res.createdAt.toString())}
+					</div>
+				{/key}
 			{/each}
 		</section>
 
