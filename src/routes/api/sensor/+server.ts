@@ -3,6 +3,12 @@ import type { RequestHandler } from './$types';
 import * as result from '$lib/services/result';
 import type { Result } from '@prisma/client';
 
+/**
+ * GET handler that returns the latest sensor reading result for each board.
+ *
+ * Fetches all boards with their latest associated sensor reading result from the database.
+ * Returns the aggregated latest result for each board in the response.
+ */
 export async function GET() {
 	try {
 		const backend = await result.getBoardWithLatestResult();
@@ -14,6 +20,16 @@ export async function GET() {
 	}
 }
 
+/**
+ * POST handler that accepts sensor reading data and saves it to the database.
+ *
+ * Authenticates the request using the provided API key.
+ * Extracts the sensor data from the request body.
+ * Converts the board ID to a number.
+ * Validates the API key matches the board ID.
+ * Creates a new database record with the sensor data.
+ * Returns a success or failure response.
+ */
 export async function POST({ request }) {
 	try {
 		// Extract data from request body
